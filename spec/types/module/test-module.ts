@@ -1385,3 +1385,16 @@ testNode.innerHTML = "<div data-bind='template: \"myTemplate\"'></div>";
 ko.applyBindings(null, testNode);
 // Since the actual template markup was invalid, we don't really care what the
 // resulting DOM looks like. We are only verifying there were no exceptions.
+
+
+function testIgnoreDependencies() {
+    const five = ko.ignoreDependencies(() => 5);
+
+    const target = {foo: "foo"};
+
+    const foobar = ko.ignoreDependencies(function (bar) {
+        return this.foo + bar;
+    }, target, ["bar"])
+
+    foobar.toUpperCase();
+}
